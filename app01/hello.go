@@ -1,10 +1,12 @@
 package main //把test.go文件归属到main包,go语言的每个文件都要属于一个包，
-import ("fmt"; "unsafe") //引入一个包fmt
+import ("fmt"; "unsafe"; "app01/variables") //引入一个包fmt
 
 //指针:p(表示保存的变量-即地址),*p(指向的变量),&p(自己的地址)
 func testPtr(num *int){ //*号表示指针类型
 	*num = 20 //指针指向的值
 	fmt.Println(num)
+	
+	
 }
 
 //主函数
@@ -37,4 +39,9 @@ func main() {
 	fmt.Println(&q) //q指针自己的地址
 	fmt.Println(q) //q指向的地址
 	//fmt.Println(*q) //q指向的地址所保存的值
+	
+	fmt.Println("----------------")
+	variables.varTest()
+
+
 }
