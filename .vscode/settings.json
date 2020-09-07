@@ -1,5 +1,11 @@
 {
     "go.enableCodeLens": {
     
+    },
+    "python.autoComplete.addBrackets": true,
+    "go.autocompleteUnimportedPackages": true,
+    "go.goroot": "",
+    "go.alternateTools": {
+    
     }
 }
