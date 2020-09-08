@@ -20,7 +20,7 @@ func main(){
 	fmt.Println(&c, d)
 	fmt.Println(c, &c, d, *d, &d) //d输出c的16进制地址0xc04200e100
 	
-	*d = 55 //如果指针d指向的值改变呢？c同样会改变
+	*d = 55 //指针d指向的值改变呢？c会改变!
 	fmt.Println(c, &c, d, *d, &d) //d输出c的16进制地址0xc04200e100
 
 	aa := [3]int{1, 2, 3} //int默认64位,
@@ -38,10 +38,38 @@ func main(){
 	//ms = &myStruct{foo: 43}//&{43}
 	ms = new(myStruct) //&{0}，0指foo是int默认值
 	fmt.Println(ms,*ms, &ms)
-	(*ms).foo = 33 //使用()
+	(*ms).foo = 33 //可以简写ms.foo = 33
+	fmt.Println(ms,*ms, &ms)
+	ms.foo = 63
 	fmt.Println(ms,*ms, &ms)
 
-	
+	s1 := "hello"
+	s2 := s1
+	fmt.Println(s1,s2)
+	s1 = "golang"
+	fmt.Println(s1,s2) //不等
+
+
+	fmt.Println("---------------------------")
+	bb := [3]int{1,2,3} //[3]int{}是array,[]int{}是slice
+	//bb := []int{1,2,3} //这时bb是个slice，不包含值，使用pointer方式
+	fmt.Printf("---%v,%T\n",bb,bb)
+	cc := bb
+	fmt.Println(bb,cc) //两个地址
+	fmt.Println(bb,cc) //相等
+	bb[1] = 9
+	fmt.Println(bb,cc)//如果bb是array就不同，如果是slice就相同
+
+	fmt.Println("---------------------------")
+	dd := map[string]string{"foo":"bar", "baz":"buz"}
+	ee := dd
+	fmt.Println(dd,ee)
+	dd["foo"] = "qux"
+	fmt.Println(dd,ee) //相同，
+
+	//如果是基本数据类型，string, struct
+	//如果是slice(没有实际数据，底层是指针指向), map(底层也是指针指向数据)
+	//java中：number,string,bool等基本数据类型会不同，array,list,map等类型会相同
 }
 
 type myStruct struct {
