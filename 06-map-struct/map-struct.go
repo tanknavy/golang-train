@@ -41,7 +41,7 @@ func main(){
 	}
 
 	//注:可以不定义type struct定义，直接创建一次性(匿名)的struct对象
-	bDoctor := struct{name string}{name: "Greg"}
+	bDoctor := struct{name string}{name: "Greg"}//匿名struct{字段定义}{字段赋值}
 	cDoctor := bDoctor
 	cDoctor.name = "Bob"
 

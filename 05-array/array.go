@@ -12,7 +12,7 @@ func main() {
 	
 	fmt.Printf("数组%v %v\n", grades,gg1)//数组，不一样 
 
-	grades2 := []int{1,2,3,4,5}
+	grades2 := []int{1,2,3,4,5} //创建slice
 	fmt.Printf("%v %T\n", grades2,grades2)//[]int
 	gg2 := grades2
 	grades2[1] = 22

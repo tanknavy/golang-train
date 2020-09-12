@@ -39,7 +39,7 @@ func main(){
 
 	fmt.Println("---------------------")
 	aa := []int{11,22,33} 
-	for k,v := range aa{ //range类似python的enumerate
+	for k,v := range aa{ //range迭代slice，类似python的enumerate
 		fmt.Println(k,v)
 	}
 

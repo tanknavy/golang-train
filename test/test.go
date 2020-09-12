@@ -13,9 +13,30 @@ func main(){
 	
 	test01()
 
+	person := Person{name:"Jr. Bob", age:29}
+	person.show()
+	fmt.Printf("%v, %T\n", person, person)
+
+	var pp Generic = Person{name:"Sr. Bob", age:39}//接口做类型引用
+	pp.show()
+
+	
 }
 
 func test01() string{
 	//Aa := "hello,go"
 	return "global scope"
+}
+
+type Person struct{
+	name string
+	age int
+}
+
+type Generic interface{
+	show()
+}
+
+func (p Person) show() {
+		fmt.Println("my name is ", p.name)
 }
