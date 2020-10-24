@@ -7,7 +7,7 @@ import (
 	//"time"
 )
 
-var wg = sync.WaitGroup{}
+var wg = sync.WaitGroup{} //等待其它协程完工
 var counter = 0
 var m = sync.RWMutex{} //Mutex互斥锁,RWMutext读写互斥锁
 

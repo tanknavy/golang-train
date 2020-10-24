@@ -8,7 +8,7 @@ import (
 //1. for i:0;i<10;i++{}
 //2. for i<10 {} ----while
 //3. for {} --- infinite loop
-//4. for i := range slice{} --- for-each range loop  //range对可迭代类型/集合
+//4. for i := range collection{} --- for-each range loop  //range对可迭代类型/集合
 //5. continue and break
 func main() {
 	for i := 0; i < 5; i++ { //类似java的for,没有(),可类型推断

@@ -9,6 +9,7 @@ import (
 //go run main.go
 //go build -o test.exe
 
+//sync包下面的互斥锁
 //计算1-200各个数的阶乘, 并发/并行安全问题，判断是否存在资源竞争，编译程序时增加一个参数-race
 //并发竞争: 共享的值通过信道传递，一个时间点只有一个go协程能访问，提倡不通过共享内存来通信，而通过通信(信道)来共享内存，
 //res := make([]int,20) //类型推导的变量不能放这里，改为var
@@ -28,7 +29,7 @@ func main() {
 		go jiecheng(i+1) //开启多个协程后,fatal error: concurrent map writes,并发写问题
 	}
 	
-	time.Sleep(2 * time.Second)//主线程退出，协程马上退出
+	time.Sleep(2 * time.Second)//主线程退出，协程马上退出,等待多久合适，使用channel吧
 	lock.Lock() //函数
 	fmt.Println(myMap) //可能这里需要锁
 	lock.Unlock()

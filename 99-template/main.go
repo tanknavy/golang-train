@@ -4,9 +4,10 @@ import (
 	"fmt"
 )
 
+func main() {
+	fmt.Println("---------------")
+
+}
+
 //go run main.go
 //go build -o test.exe
-
-func main() {
-	fmt.Println("----")
-}

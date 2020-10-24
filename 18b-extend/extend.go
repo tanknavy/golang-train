@@ -11,6 +11,9 @@ import (
 //interface：设计,设计好各种规范(方法),让其他自定义类型是实现这些方法，满足like -a的关系
 //多态：变量(实例)具有多种形态，在golang中多态是通过接口实现的，可以按照统一的接口来调用不同的实现
 
+//任何类型都实现了空接口,因为空接口什么方法都没有,所以interface{}可以引用一切类型，
+//variable.(type)使用assert类型断言将interface{}类型变量转成本来的类型
+
 func main() {
 	monkey := SuperMonkey{
 		//Monkey{name: "wukong",}, //只有父类属性时，匿名
