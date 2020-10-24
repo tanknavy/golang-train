@@ -1,6 +1,11 @@
 package main
+
 //Go中首字母大写表示global
-import ("fmt";"bytes";"io")
+import (
+	"bytes"
+	"fmt"
+	"io"
+)
 
 func main() {
 	//1.interface和struct
@@ -18,33 +23,31 @@ func main() {
 		fmt.Println(inc.Incre())
 	}
 	//interface方法中使用struct的地址作为输入参数，所以这样可以读取struct地址
-	fmt.Println(inc.(*IntCounter))//interface中的struct的地址？
-
+	fmt.Println(inc.(*IntCounter)) //interface中的struct的地址？
 
 	//3.interface的嵌套(继承)，多个方法实现
-	var wc WriterCloser = NewBufferedWriterCloser()//返回*BufferedWriterCloser一个struc的指针
+	var wc WriterCloser = NewBufferedWriterCloser() //返回*BufferedWriterCloser一个struc的指针
 	//wc.Write([]byte{"Hello, this is a test"}) //错误，元素要字符
 	//wc.Write([]byte{'h','e','y'})//正确
-	wc.Write([]byte("Hello, this is a test"))//字符串转字节slice
+	wc.Write([]byte("Hello, this is a test")) //字符串转字节slice
 	wc.Close()
 
-	fmt.Println(wc.(Writer)) //wc中有Writer接口，Closer接口，还有BufferedWriterCloser
-	bwc := wc.(*BufferedWriterCloser)//wc接口方法聚合了struct的地址作为指针的输入类型
-	fmt.Println("interface中对sturct的引用：",bwc)
-	
+	fmt.Println(wc.(Writer))          //wc中有Writer接口，Closer接口，还有BufferedWriterCloser
+	bwc := wc.(*BufferedWriterCloser) //wc接口方法聚合了struct的地址作为指针的输入类型
+	fmt.Println("interface中对sturct的引用：", bwc)
 
 	//5.上述接口对象查看聚合了io.Reader接口
 	r, ok := wc.(io.Reader)
-	if ok{
+	if ok {
 		fmt.Println(r)
-	}else{
+	} else {
 		fmt.Println("转换失败")
 	}
 
 	//6.查看接口类型
-	var i interface{} = 0//使用接口作为引用
-	fmt.Printf("%v %T\n",i,i)//0,int
-	switch i.(type){
+	var i interface{} = 0       //使用接口作为引用
+	fmt.Printf("%v %T\n", i, i) //0,int
+	switch i.(type) {
 	case int:
 		fmt.Println("is integer")
 	case string:
@@ -53,7 +56,6 @@ func main() {
 		fmt.Println("don't now what it is ")
 	}
 }
-
 
 //1.接口不描述数据而是描述行为！
 type Writer interface { //定义接口，方法的集合，没有具体实现
@@ -84,34 +86,34 @@ type BufferedWriterCloser struct {
 }
 
 //引用BufferedWriterCloser结构体，实现interface的Write方法
-func (bwc *BufferedWriterCloser) Write(data []byte) (int,error){
+func (bwc *BufferedWriterCloser) Write(data []byte) (int, error) {
 	n, err := bwc.buffer.Write(data) //将data数据写到buffer缓冲区
-	fmt.Println("写数据",n,"个字符到缓冲区")
-	if err != nil{
+	fmt.Println("写数据", n, "个字符到缓冲区")
+	if err != nil {
 		return 0, err
 	}
 
-	v := make([]byte, 8) //8字节slice缓冲区
-	for bwc.buffer.Len() > 8{ //for条件每8字节输出一次
+	v := make([]byte, 8)       //8字节slice缓冲区
+	for bwc.buffer.Len() > 8 { //for条件每8字节输出一次
 		_, err := bwc.buffer.Read(v) //从缓冲区抽取v个字节的数据
-		if err != nil{
+		if err != nil {
 			return 0, err
 		}
 		fmt.Println("Write阶段每8字节长度输出")
 		_, err = fmt.Println(string(v)) //输出
-		if err != nil{
+		if err != nil {
 			return 0, err
 		}
 	}
-	return n,nil //最终返回
+	return n, nil //最终返回
 }
 
 //引用BufferedWriterCloser结构体，实现interface的Close方法
-func (bwc *BufferedWriterCloser) Close() error{
+func (bwc *BufferedWriterCloser) Close() error {
 	for bwc.buffer.Len() > 0 { //关闭时如果还有字符
 		data := bwc.buffer.Next(8)
 		fmt.Println("Closer阶段输出最后一小段小于8字节的")
-		_,err := fmt.Println(string(data))
+		_, err := fmt.Println(string(data))
 		if err != nil {
 			return err
 		}
@@ -119,10 +121,9 @@ func (bwc *BufferedWriterCloser) Close() error{
 	return nil
 }
 
-
-func NewBufferedWriterCloser() *BufferedWriterCloser{
-	return &BufferedWriterCloser{ //初始化struct
-		buffer: bytes.NewBuffer([]byte{}),//默认输入空字节slice
+func NewBufferedWriterCloser() *BufferedWriterCloser { //返回指针
+	return &BufferedWriterCloser{ //初始化struct, 返回地址
+		buffer: bytes.NewBuffer([]byte{}), //默认输入空字节slice
 	}
 }
 

@@ -4,6 +4,7 @@ import (
 	"fmt"
 )
 
+//首字母大写表示global/public, 小写表示private
 func main() {
 	greeting := "Hello"
 	name := "Stacy"
