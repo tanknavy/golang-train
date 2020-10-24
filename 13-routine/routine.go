@@ -9,7 +9,7 @@ import (
 
 var wg = sync.WaitGroup{}
 var counter = 0
-var m = sync.RWMutex{} //互斥锁
+var m = sync.RWMutex{} //Mutex互斥锁,RWMutext读写互斥锁
 
 func main() {
 	fmt.Printf("Threads:%v\n", runtime.GOMAXPROCS(-1)) //默认最大并行执行的数=cpu

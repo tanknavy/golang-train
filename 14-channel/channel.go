@@ -5,6 +5,8 @@ import (
 	"sync"
 )
 
+//并发竞争：1)全局锁，2）channel
+//从共享内存通信，改为信道中分享内存，channel同时只有一个协程能访问
 //channel信道, goroutine通信
 //channel默认无缓冲，一次仅能处理一个
 var wg = sync.WaitGroup{}

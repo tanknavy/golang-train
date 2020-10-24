@@ -29,12 +29,13 @@ func main() {
 	c = d
 	//一定要c原本指向的类型和要断言的类型一样
 	e, ok := c.(float64) //flag成功就true,失败就false
+	//if e,ok :=c(float64); ok{} //简洁版, 赋值操作和if判断一起
 	if ok {
 		fmt.Printf("e的类型是%T,转换成功,结果是%v", e, e) //%T查看变量类型，%v是变量的值
 	} else {
 		fmt.Println("转换失败!")
 	}
-	
+
 	fmt.Println("转换失败继续执行,不会panic")
 
 }
