@@ -1,6 +1,8 @@
 package main
 
 import (
+	"runtime"
+	"time"
 	"fmt"
 	"sync"
 )
@@ -20,15 +22,23 @@ func main() {
 	//time.Sleep(1000)//光等待不靠谱
 	//使用channel,写管道exitChan, 或者sync.WaitGroup?
 	//详情查看routine + channel
-	num := 10000                      //最大计算到几个素数
+	num := 20000
+
+	s1 := time.Now().Unix()
+	sushu(num)//单个跑
+	e1 := time.Now().Unix()
+
+    //最大计算到几个素数
 	intChan := make(chan int, num)   //1-n的数字，1个routine
 	primeChan := make(chan int, num) //素数管道, 2个routine
 	exitChan := make(chan bool, 4)   //全部协程完成标志管道
 
+	s2 := time.Now().Unix()
 	go pushData(num, intChan, exitChan) //一个协程向intChan放入数字
 
 	//起多少个协程
 	totalRoutines := 8 //要起/等几个协程完工？和cpu一样多
+    runtime.GOMAXPROCS(4)//golang使用几个cpu, go1.8以后默认开启全部
 	wg.Add(totalRoutines)
 	for i := 0; i < totalRoutines; i++ {
 		go primeData(intChan, primeChan, exitChan) //从intChan取出数据并判断是否为素数，如果是放入primeChan
@@ -60,18 +70,26 @@ func main() {
 	wg.Wait()        //全部协程完成
 	close(primeChan) //下面循环读取，记得关闭
 	close(exitChan)
+	e2 := time.Now().Unix()
+	
 
 	//遍历取出数据
 	fmt.Println("开始读取primeChan全部素数")
 	for {
-		v, ok := <-primeChan //一直取，知道全部读完
+		//v, ok := <-primeChan //一直取，知道全部读完
+		_, ok := <-primeChan //一直取，知道全部读完
 		if !ok {
 			break
 		} else {
-			fmt.Println(v)
+			//fmt.Println(v)
 		}
 	}
 	fmt.Println("主线程退出")
+	fmt.Printf("起始时间%v,%v\n",s1,e1)
+	fmt.Printf("起始时间%v,%v\n",s2,e2)
+	fmt.Println("单线程耗时=", e1 - s1)
+	fmt.Println("多协程耗时=", e2 - s2)
+	fmt.Println(time.Now().UnixNano())
 
 }
 
@@ -86,7 +104,7 @@ func sushu(num int) {
 			}
 		}
 		if flag {
-			fmt.Println(i)
+			//fmt.Println(i)
 		}
 	}
 }

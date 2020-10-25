@@ -5,7 +5,8 @@ import (
 	"time"
 	//"sync"
 )
-
+//不关闭管道读取时会阻塞，读完后还会报错
+//使用select可以解决从管道取数据的阻塞问题，goroutine中使用recover解决协程中出现panic导致程序崩溃问题
 const (
 	logInfo = "INFO"
 	logWarning = "WARNING"
@@ -39,7 +40,7 @@ func main() {
 
 func logger(){
 	//for entry := range logCh{ //for循环读出，range迭代logCh信道
-	for {
+	for { //无限循环
 		// choose from multiple send/receive channel operations. The select statement blocks until one of the send/receive operation is ready. 
 		// If multiple operations are ready, one of them is chosen at random. The syntax is similar to switch except that each of the case statement will be a channel operation.
 		// select监控多个channel直到一个ready，如果多个ready随机选择一个

@@ -9,6 +9,7 @@ import (
 //从共享内存通信，改为信道中分享内存，channel同时只有一个协程能访问
 //channel信道, goroutine通信
 //channel默认无缓冲，一次仅能处理一个，现在好像可以缓冲了吧，
+//channel可以声明为只读或者只写，看chan在哪边
 var wg = sync.WaitGroup{}//等待全部协程完成
 
 func main() {
@@ -19,7 +20,7 @@ func main() {
 	//for j := 0; j < 5; j++ {
 		wg.Add(2) //类似CountdownLatch, 主线程需要等待两个协程完成才会退出
 		//go func() {
-		go func(ch <- chan int) { //匿名函数，receive-only,接受一个chan int类型的输入，chan是关键字
+		go func(ch <- chan int) { //匿名函数，receive-only只读,接受一个chan int类型的输入，chan是关键字
 			for i := range ch{ //range遍历管道需要管道先close
 				//i := <- ch //从channel中接受数据到i
 				fmt.Println(i)
@@ -31,7 +32,7 @@ func main() {
 		}(ch) //匿名函数使用，ch是引用类型，两端操作同一个管道
 		
 		//go func() {
-		go func(ch chan <- int) { //匿名函数，send-only，我发送int类型数据到ch chan通道引用
+		go func(ch chan <- int) { //匿名函数，send-only只写，我发送int类型数据到ch chan通道引用
 			i := 29
 			ch <- i //向channel中发送数据，默认无缓冲ch,一次一个
 			//fmt.Println(<-ch) //收一个并答应
