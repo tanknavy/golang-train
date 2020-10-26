@@ -6,6 +6,7 @@ import (
 )
 
 //首字母大写表示global/public, 小写表示private
+//struct如何系列化？json.Marshal(&struct)返回byte的slice
 func main() {
 	populations := map[string]int{ //定义map[string]int
 		"ca": 29, //格式类似json

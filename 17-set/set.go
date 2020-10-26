@@ -4,7 +4,8 @@ import "fmt"
 //https://www.davidkaya.com/sets-in-golang/
 //https://github.com/deckarep/golang-set/blob/master/threadunsafe.go
 //可以使用以下自定义map实现set
-//为什么key用interface{}而value用struct{}, 涉及到类型使用interface{},涉及值使用struct{}{}
+//为什么key用interface{}而value用struct{}, 涉及到类型使用interface{},
+//涉及值使用struct{}{}
 var InterfaceSet map[interface{}]struct{}
 var IntSet       map[int]struct{} 
 var StringSet    map[string]struct{}
