@@ -57,8 +57,8 @@ func main() {
 
 	//结构体可以被嵌套(类似继承,匿名继承)
 	type Animal struct {
-		name   string `required max:"10"` //使用tag
-		origin string
+		name   string `required max:"10"` //使用tag, 还有json:"name"指定json序列化时的属性名 
+		Origin string `json:"origin_"` //首字母大小表示export
 	}
 
 	type Bird struct {

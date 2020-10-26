@@ -1,8 +1,8 @@
 package main
 
 import (
-	"log"
 	"fmt"
+	"log"
 	"reflect"
 )
 
@@ -17,15 +17,15 @@ const (
 //  v := iv.(Student)
 
 //反射 是在运行时
-func reflectTest01(obj interface{}) {
+func reflectTest01(obj interface{}) { //Type,Value, Kind
 	//通过反射获取的输入的变量的type(类型), kind(类别)，value
 	//1.先获取到reflect.Type接口
 	rType := reflect.TypeOf(obj) //反射拿到类型
-	fmt.Printf("rType=%v, type=%T\n", rType, rType)
+	fmt.Printf("TypeOf: rType=%v, type=%T\n", rType, rType)
 
 	//2.获取到relfect.Value结构体
 	rValue := reflect.ValueOf(obj) //
-	fmt.Printf("rValue=%v, type=%T\n", rValue, rValue)
+	fmt.Printf("ValueOf: rValue=%v, type=%T\n", rValue, rValue)
 
 	//3.获取变量对应的Kind
 	//Type是类型，Kind是类别(具体分类列表)，它们可能相同(基本类型时)，也可能不同(main.Student, struct)
@@ -47,6 +47,20 @@ func reflectTest01(obj interface{}) {
 	default:
 		fmt.Println("不知道啥类型")
 	}
+}
+
+func reflectTest02(obj interface{}) { //通过反射修改值，传入必须是地址类型，否则是值类型
+	//通过反射获取的输入的变量的type(类型), kind(类别)，value，Value.SetXXX改变值
+
+	//2.获取到relfect.Value结构体
+	rValue := reflect.ValueOf(obj) //
+	fmt.Printf("rValue=%v, type=%T, kind=%v\n", rValue, rValue, rValue.Kind())
+
+	//SetXXX方法, 反射改变变量的值，要使用Elem()
+	//调用这个函数时要&地址类型，否则改变不了值，但是rValue变成了指针类型，就不能SetInt()了
+	//rValue.SetInt(19) //error, unaddressed,
+	//Elem()作用类似 *(&num), 指向变量num的指针，然后指针取值就还是num
+	rValue.Elem().SetInt(19) //Elem()返回变量v持有借口保管的值的Value封装，或者持有指针指向值的Value封装
 
 }
 
@@ -72,17 +86,22 @@ func main() {
 	reflectTest01(stu)
 	stu.getIfno()
 
+	//通过反射修改值，注意使用地址&,或者Value.SetXXX
+	var num2 int = 9
+	reflectTest02(&num2) //传递指正才能真正改变, 但是传入指针后又不能用SetInt()，reflect.Value().Elem().SetInt()
+	fmt.Println("num2:", num2)
+
 	//常量
 	const (
-		_ = iota
-		a
-		b
-		c
+		_    = iota       //0
+		a                 //1
+		b, c = iota, iota //2,2
+		d    = iota       //3
 	)
-	fmt.Println(a,b,c)
+	fmt.Println(a, b, c, d)
 
 	//日志
-	log.Println("log print")
+	log.Println("log...")
 
 }
 

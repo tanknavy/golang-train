@@ -3,8 +3,8 @@ import ("fmt")
 
 func main() {
 	
-	// array：固定长度，[...]int{1,2,3},[5]int{} 要么前面[...]后面指定详细元素，要么[length]
-	// slice：可变长度，[]int{1,2,3}, make([]int, length, capacity), 可以make
+	// array：固定长度，声明[...]int, [...]int{1,2,3},[5]int{} 要么前面[...]后面指定详细元素，要么[length]
+	// slice：可变长度，声明[]int, []int{1,2,3}, make([]int, length, capacity), 可以make
 	aa := make([]int, 3,8) // 创建slice，长度3，容量10
 	grades := [...]int{1,2,3,4,5} //整型数组,数值默认0
 	fmt.Printf("%v %T\n", grades,grades) //[5]int
