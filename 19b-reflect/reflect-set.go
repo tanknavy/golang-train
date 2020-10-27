@@ -16,7 +16,6 @@ func main() {
 		Score: 98,
 	}
 	TestStruct(a)
-	fmt.Println("&a地址：",a) //struct本来就是引用
 	TestStruct_set(&a) //想修改字段值，需要&
 	//TestStruct_new(a) //可传对象也可传对象的指针，
 	TestStruct_new(&a)//多了一层Elme()取值
@@ -72,15 +71,19 @@ func TestStruct(a interface{}){
 			fmt.Printf("field %d: tag为=%v\n", i, tagVal)
 		}
 	}
+
 	//2.1结构体字段赋值或者修改: 反射修改值，第一传入要使用地址&,第二修改时使用Elem()
 	//见下面的方法 func(s *Student)
-	//val2 := reflect.ValueOf(a)
-	//val2.Elem().Field(0).SetString("jack")
-	//val2.Elem().FieldByName("Name").SetString("jack")
-	//val2.Field(0).Elem().SetString("jack")
+	// val2 := reflect.ValueOf(a)
+	// //val2.FieldByName("Name").SetString("jack")
+	// val2.Elem().Field(0).SetString("jack") ////reflect: call of reflect.Value.Field on interface Value
+	// val2.Elem().FieldByName("Name").SetString("TomCat")
+	// //val2.Field(0).Elem().SetString("jack")
+	// //fmt.Println("反射修改struct字段name后：",(*a).Name) //a是interface{}类型，a.name不能
+	// fmt.Println("反射修改struct字段name后：",a) //a是interface{}类型，a.name不能
+
 	
-
-
+	
 	//3.结构体有多少个method
 	numOfMethod := val.NumMethod()
 	fmt.Printf("struct has %d methods\n",num)
@@ -115,7 +118,7 @@ func TestStruct(a interface{}){
 }
 
 
-//func TestStruct2(a *Student){ //要操作结构体的字段的值
+//func TestStruct2(a *Student){ //要操作结构体的字段的值, 传入结构体引用
 func TestStruct_set(a interface{}){ //要操作结构体的字段的值，传入地址
 	fmt.Println("--------------通过反射修改struct的字段值------------------")
 	//2.结构体有几个字段

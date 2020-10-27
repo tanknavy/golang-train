@@ -8,7 +8,7 @@ func main(){
 	defer fmt.Println("end")//defer使用LIFO方式决定执行顺序
 
 	a := "aa"
-	defer fmt.Println("----defered a is :",a) //注意，这时还是aa
+	defer fmt.Println("----defered a is :",a) //注意，虽然defer了但这时还是aa
 	a = "bb" //改变a的值
 	fmt.Println("----current a is :", a) //输出bb
 
@@ -39,7 +39,7 @@ func main(){
 func httpGet(){
 	res,err := http.Get("http://www.google.com/rebots.txt")
 	if err != nil { //错误不为空
-		log.Fatal(err)
+		log.Fatal(err) //日志
 	}
 	defer res.Body.Close() //延时关闭资源
 	rebots, err := ioutil.ReadAll(res.Body)//读取http返回体
