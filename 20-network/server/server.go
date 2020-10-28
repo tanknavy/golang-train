@@ -11,7 +11,7 @@ func process(conn net.Conn) { //拿到客户和本机的连接，使用routine�
 
 	defer conn.Close() //延时关闭，不关闭资源导致服务器
 	for {              ////循环接受client发送的数据
-		//创建新的切片用于读取客户端输入
+		//创建新的切片用于保存读取客户端的输入
 		buf := make([]byte, 1024) //字节切片
 		//1.等待客户端通过conn发送信息
 		//2.如果客户端没有Write(发送)，那么协程就阻塞在这里, tcp协议

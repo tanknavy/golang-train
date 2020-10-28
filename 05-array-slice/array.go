@@ -9,7 +9,7 @@ import (
 func main() {
 
 	// array：固定长度，声明[num]int, [5]int{},[...]int{1,2,3},要么前面[...]后面指定元素，要么[length]type，
-	// slice：可变长度，声明[]int, []int{1,2,3},切片可以从现有数组创建,或者make([]int, length, capacity), 可以make，元素是指针
+	// slice：可变长度，声明[]int, []int{1,2,3},切片可以从现有数组创建,或者make([]int, length, capacity), 可以make，元素是指针，底层是array
 	// array定义后就产生了空间，这是打印输出默认值，而slice没有make就没有空间，打印出来是[], 后面可以append数据
 	grades := [...]int{1, 2, 3, 4, 5} //整型数组,数值默认0
 	aa := make([]int, 3, 8)           // 创建slice，长度3，容量10

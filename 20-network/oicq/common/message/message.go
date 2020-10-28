@@ -6,7 +6,7 @@ const (
 	loginResMsgType = "LoginResMsg"
 )
 
-type Message struct {
+type Message struct { //struct tag
 	Type string `json:"type"` //消息类型，使用常量, 使用tag,大写为了export, 传递的/序列化时小写
 	Data string `json:"data"` //消息的内容
 }
