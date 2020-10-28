@@ -6,7 +6,7 @@ import (
 
 //golang的5中循环形式
 //1. for i:0;i<10;i++{}
-//2. for i<10 {} ----while
+//2. for i<10 {} 或for label ----while
 //3. for {} --- infinite loop
 //4. for i := range collection{} --- for-each range loop  //range对可迭代类型/集合
 //5. continue and break

@@ -58,7 +58,7 @@ func main(){
 	fmt.Println(bb,cc) //两个地址
 	fmt.Println(bb,cc) //相等
 	bb[1] = 9
-	fmt.Println(bb,cc)//如果bb是array就不同，如果是slice就相同
+	fmt.Println(bb,cc)//如果bb是array就不同(go中数组是值类型)，如果是slice就相同(引用类型)
 
 	fmt.Println("---------------------------")
 	dd := map[string]string{"foo":"bar", "baz":"buz"}

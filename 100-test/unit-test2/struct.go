@@ -31,6 +31,8 @@ func(m *Monster) Store() bool{
 
 //绑定方法，反序列化
 func(m *Monster) Restore() bool{
+
+	//真实环境中for...从文件系统读取大量测试数据
 	//1.从文件中读取序列化的字符串
 	filePath := "e:/tmp/monster.ser"
 	data, err := ioutil.ReadFile(filePath)

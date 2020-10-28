@@ -2,7 +2,7 @@ package main
 
 import ("fmt";"unsafe")//go编程无需;结尾
 
-var ( //变量
+var ( //变量和作用域
 	a string= "aa is String定义变量" //字符串变量
 	b int  = 33 //作用域在main包,package scope
 	D int = 95 //大写变量expose到外面，global scope
