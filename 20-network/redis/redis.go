@@ -1,5 +1,7 @@
 package main
 
+//redis-server.exe redis.windows.conf
+//redis-cli.exe -h 127.0.0.1 -p 6379
 import (
 	"fmt"
 
