@@ -11,6 +11,9 @@ var ( //变量和作用域
 func main() {
 	var i int //定义变量整形，作用域在此func scope
 	i = 24
+	//h := 9
+	//h := 19//不可以重新定义，但是golang中err error类型的可以
+
 	var j float32 =3.14 //定义变量浮点型, float32(i)整形转浮点型
 	k:="hello" //定义变量字符串型，类型，赋值，快捷方式
 	fmt.Println(a,b)

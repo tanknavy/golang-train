@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"goTrain/20-network/oicq/common/message" //GOPATH的src下全路径的
 	"net"
+	"time"
 )
 
 //写一个函数，完成登录
@@ -38,7 +39,7 @@ func login(userId int, userPwd string) (err error) {
 	data, err := json.Marshal(loginMsg) //返回byte
 	if err != nil {
 		fmt.Println("json.Marshal err=", err)
-		return
+		return //如果有错，return会返回err，因为和返回值变量同名，golang里面返回值有初始值可以直接在程序中使用
 	}
 
 	//5.data赋给msg.Data
@@ -56,17 +57,31 @@ func login(userId int, userPwd string) (err error) {
 	// 先获取data长度->转成一个表示长度的byte切片，
 	//encoding/binary实现数字与字节序列的转换
 	var pkgLen uint32 = uint32(len(data)) //data是字节数组，数据长度无符号32位,强转
-	var buf [4]byte //准备一个数组，为啥长度4，因为32bit就是4byte
+	var buf [4]byte                       //准备一个数组，为啥长度4，因为32bit就是4byte
 	//var buf []byte = make([]buf, 4, 4)
 	//var buf []byte
 	binary.BigEndian.PutUint32(buf[0:4], pkgLen) //将字节的长度数字转为字节slice,比如长度8转成32位的二进制，每8bit(一byte)为slice中一个元素
 	//发送长度, 可以看到slice从arr中切片，slice中元素是指针，slice的底层array，
 	n, err := conn.Write(buf[:4]) //需要发送[]byte，返回多少字节被发送，err
-	if n != 4 || err != nil {   //如果发送的byte长度不为4或者有错误
+	if n != 4 || err != nil {     //如果发送的byte长度不为4或者有错误
 		fmt.Println("conn.Write(buf) fail:", err)
 		return //
 	}
 
-	fmt.Printf("客户端 发送消息的长度=%d,内容=%s",len(data),string(data)) //tcp是一个长连接
+	fmt.Printf("客户端 发送消息的长度=%d,内容=%s", len(data), string(data)) //tcp是一个长连接
+
+	//7.2发送消息数据本身
+	_, err = conn.Write(data) //需要发送[]byte，返回多少字节被发送，err
+	if err != nil {           //如果发送的byte长度不为4或者有错误
+		fmt.Println("conn.Write(data) fail:", err)
+		return //
+	}
+
+	fmt.Println("客户端 发送消息内容成功...") //tcp是一个长连接
+	//休眠以下
+	time.Sleep(time.Second * 5)
+	fmt.Println("客户端 休眠了5秒...") //tcp是一个长连接
+	//8.还需要处理服务器端返回的消息
+
 	return //到这里err一直为nil,成功返回
 }
