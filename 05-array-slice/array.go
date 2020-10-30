@@ -5,7 +5,7 @@ import (
 )
 
 //array & slice
-//注意，在大部分语言中数组是引用类型，但golang中数据是值类型，slice是引用类型
+//注意，在大部分语言中数组是引用类型，但golang中数据是值类型，slice是引用类型,go中指针,slice,map,channel是引用类型
 func main() {
 
 	// array：固定长度，声明[num]int, [5]int{},[...]int{1,2,3},要么前面[...]后面指定元素，要么[length]type，

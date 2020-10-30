@@ -4,9 +4,11 @@ import (
 	"fmt"
 )
 
+//golang里面没有对象的概念，使用struct代替, 去调用传统oop的extend(有继承), 方法重载，构造函数，析构函数，隐藏this
+//struct在var声明变量时，空间就已经分配了，值是各个类型的默认值，struct是值类型
 //Student 定义结构体，类似class，定义时无需逗号，新建对象时需要逗号(最后一个属性赋值也需,)
-type Student struct {
-	name   string
+type Student struct { //大写示可以在其它包表中使用
+	name   string //大写示可以在其它包表中使用
 	gender string
 	age    int
 	id     int

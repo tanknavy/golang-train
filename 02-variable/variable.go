@@ -2,6 +2,8 @@ package main
 
 import ("fmt";"unsafe")//go编程无需;结尾
 
+//Printf格式化输出中，%v:变量值,%T:变量类型,%p:变量的地址
+//基本数据类型(包括指针使用new开辟空间), 引用类型使用make开辟空间
 var ( //变量和作用域
 	a string= "aa is String定义变量" //字符串变量
 	b int  = 33 //作用域在main包,package scope

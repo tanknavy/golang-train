@@ -42,13 +42,17 @@ func main() {
 
 	//5.循环读取文件内容
 	for {
-		line, err := reader.ReadString('\n') //\n换行，一次读一行
-		//line, err := reader.ReadBytes('\n') //\n换行，一次读一行
+		str, err := reader.ReadString('\n') //\n换行，一次读一行
+		//str, err := reader.ReadBytes('\n') //\n换行，一次读一行
 		if err == io.EOF{ //到了文件末尾
 			break
 		}
+		//为了兼容中文字符，可以将str转成[rune]，后面再增加case判断
+		line := []rune(str) //兼容中文的字节切片
+		
 		//遍历读取到的一行, 是个字符串, 字符串本质就是字节数组[]byte, range时就是一个个byte, 字符比较大小就是ascii码比较
-		for _, v := range line { //循环字符串
+		//for _, v := range str { //循环字符串，
+		for _, v := range line { //循环字符串，为了兼容中文
 			//fmt.Println(v)
 			//switch v { //里面是bool，这里是byte，不匹配
 			switch { // 不用变量，直接将switch当做if else分支结构
