@@ -132,6 +132,7 @@ type Incrementer interface {
 	Incre() int
 }
 
+//方法可以和struct绑定，也可以和自定义类型绑定
 type IntCounter int //使用时初始化IntCounter(0)
 
 //为什么要使用指针？如果不使用每次传入的ic的值都会复制一份，每次ic都等于1

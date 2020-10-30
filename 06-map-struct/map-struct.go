@@ -102,17 +102,24 @@ func main() {
 	fmt.Println(chan1, chan2) //地址相同
 	//fmt.Printf("%p,%p\n",&chan1, &chan2)
 
-	//不同结构体变量的字段是独立的，
+	//不同结构体变量的字段是独立的，如果一定要相同s2 := &s1,传入指针类型
+	//golang中slice,map,channel是引用类型，其它是值类型
+	//new用于值类型创建但返回指针，make用于引用类型但返回值
 	fmt.Println("-------struct不同字段类型的默认值,引用类型默认nil-------------")
-	type Person struct{//基本数据类型可以使用new, 引用类型要使用make开辟空间
+	type Person struct{//基本数据类型(包含指针)可以使用new, 引用类型要使用make开辟空间
 		name string //默认""空串
 		age int //int,float默认0
-		xx bool //默认false
-		score [3]int //指定个数就是array，默认[x x x]
+		married bool //默认false
 		ptr *int //指针, 默认nil，基本数据类型使用new开辟空间
-		hobby []string //slice,默认nil, 输出[], 测试==nil, 使用要么声明时赋值，make开辟空间，或者append
+		score [3]int //指定个数就是array，默认[x x x]
+		hobby []string //slice,默认nil, 输出[], 要么声明时赋值，make开辟空间，或者append
 		theMap map[string]string //默认nil,输出map[],使用前make开辟空间
 	}
+
 	var person Person
+	p2 := Person{}
+	var p3 *Person = new(Person) //指针,(*p3).name="tom"等价p3.name="tom",底层做了转换
+	var p4 *Person = &Person{} //地址，结构体指针.字段="value"
 	fmt.Println(person)
+	fmt.Println(p2,p3,p4)
 }

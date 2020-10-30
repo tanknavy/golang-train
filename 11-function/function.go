@@ -5,6 +5,7 @@ import (
 )
 
 //首字母大写表示global/public, 小写表示private
+//function vs method: 方法也会将调用对象作为实参传递进来(根据变量是值类型还是引用类型，struct是值类型)
 func main() {
 	greeting := "Hello"
 	name := "Stacy"
