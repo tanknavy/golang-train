@@ -80,7 +80,9 @@ func (m Monster) SayHey() {
 	fmt.Println("B interface method")
 }
 
-type CInterface interface { //接可以继承接口，如果这些接口有共同方法怎么办？type可以实现不同接口的相同方法,但是不能继承有公共方法的多个接口
+//接可以继承接口，如果这些接口有共同方法怎么办？type(struct)可以实现不同接口的相同方法,但是interface不能继承有公共方法的多个接口
+//一个接口
+type CInterface interface {
 	AInterface //接口继承其它接口
 	BInterface //接口继承其它接口
 	SayHello() //自己的方法
@@ -101,8 +103,51 @@ func (a Animal) SayHello() {
 	fmt.Println("C interface method")
 }
 
-type T interface{} //定义T为空接口类型
+//空接口
+type T interface{} //定义T为空接口类型,可以把任何一个变量赋给空接口
+
 type S struct{}
+
+type DInterface interface {
+	Test01()
+	Test02()
+}
+
+type EInterface interface {
+	Test01()
+	Test03()
+}
+
+type FInterface interface { //会有两个同名的方法，编译器会报错?
+	DInterface
+	EInterface //duplicate method Test01
+}
+
+type Fun interface{
+	PlayWithMe()
+}
+
+type Dog struct{
+}
+type Cat struct{
+}
+
+type Pet struct{
+}
+func (p Pet) Play(f Fun){ //接口本来就是指针类型
+//func (p *Pet) Play(f *Fun){ //这样也可以，但是繁琐
+	f.PlayWithMe()
+	//(*f).PlayWithMe()
+}
+
+
+func (d *Dog) PlayWithMe(){ //实现了A接口方法，但是使用的是指针！在赋值时也必须是指针类型
+	fmt.Println("Dog PlayWithMe")
+}
+
+func (c *Cat) PlayWithMe(){ //实现了A接口方法，但是使用的是指针！在赋值时也必须是指针类型
+	fmt.Println("Cat PlayWithMe")
+}
 
 func main() {
 	//1.实现接口，多态引用
@@ -148,10 +193,22 @@ func main() {
 	t2 = "Millions"         //可以随便赋值
 	var t3 float32 = 3.14
 	//t3 = "hello" //错误,类型不匹配
-	var t4 S //空struct,体会下区别
+	var t4 S //空struct,没用
 
 	fmt.Println(t2)
 	fmt.Println(t3)
 	fmt.Println(t4)
 
+	//结构体指针实现的接口
+	//var d Pet = Dog{}//错误，没有实现接口，方法传入的是pointer receiver
+	var d Dog = Dog{}
+	var d2 Fun = &d //是指针作为变量
+	fmt.Printf("d2=%v,%v",d,d2)
+	d2.PlayWithMe()
+	var c2 Fun = &Cat{}
+	c2.PlayWithMe()
+
+	var p2 Pet = Pet{}//使用多态时，即使是传入struct pointer变量传入实现的接口，但使用时没有任何变化
+	p2.Play(d2)
+	//p2.Play(c2)
 }
