@@ -49,7 +49,7 @@ func reflectTest01(obj interface{}) { //Type,Value, Kind
 	}
 }
 
-func reflectTest02(obj interface{}) { //通过反射修改值，传入必须是地址类型，否则是值类型
+func reflectTest02(obj interface{}) { //通过反射修改值，传入必须是地址类型（其它还有值类型）
 	//通过反射获取的输入的变量的type(类型), kind(类别)，value，Value.SetXXX改变值
 
 	//2.获取到relfect.Value结构体

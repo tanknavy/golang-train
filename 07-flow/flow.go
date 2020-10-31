@@ -1,6 +1,7 @@
 package main
 import ("fmt")
 
+//switch匹配变量值，bool表达式, v.(type)变量类型
 func main(){
 	populations := map[string]int{ //定义map[string]int
 		"ca" : 29,

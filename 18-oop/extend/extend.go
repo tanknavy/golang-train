@@ -15,6 +15,14 @@ import (
 //variable.(type)使用assert类型断言将interface{}类型变量转成本来的类型
 
 func main() {
+
+	//继承的复用性和可扩展性
+	m1 := &SuperMonkey{}
+	m1.Monkey.name = "houzi" //嵌入匿名结构体实现继承，可以简写m1.name
+	//m1.name = "houzi"
+	m1.title = "bimawen"
+	m1.climb()
+
 	monkey := SuperMonkey{
 		//Monkey{name: "wukong",}, //只有父类属性时，匿名
 		Monkey: Monkey{name: "wukong"}, //混合父类字段赋值，和自己属性赋值时，要使用:
@@ -35,7 +43,10 @@ func (monkey *Monkey) climb() {
 }
 
 type SuperMonkey struct { //结构体，子类
-	Monkey //匿名继承,父类的属性和方法就可以使用
+	//嵌套一个匿名结构体，匿名继承,父类的属性和方法就可以使用
+	//可以使用匿名结构体的全部字段和方法，不管大小写，字段先从本结构体开始找，没找到到嵌套结构体内查找
+	//如果结构体和匿名结构体有相同的字段或方法，编译器采用就近原则，
+	Monkey 
 	title  string
 }
 
